@@ -24,6 +24,5 @@ def login():
     return
 
 if __name__ == "__main__":
-    #setup_master_password()
-    print(auth.load_master_password_hash())
+    setup_master_password()
     login()
