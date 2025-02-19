@@ -1,4 +1,5 @@
 from src.core import auth
+from src.core import gui
 
 #only run if there's no master password hash yet
 def setup_master_password():
@@ -11,19 +12,20 @@ def setup_master_password():
         print("Master Password Set.")
     else:
         print("Master Password is already set..")
-def login():
+def login() -> bool:
     stored_hash = auth.load_master_password_hash()
     if stored_hash is None:
         print("No Master Password set. Set it up first.")
-        return
+        return True
     master_password = input("Enter your master password: ")
     if auth.verify_master_hash(master_password, stored_hash):
         print("Login Successful.")
+        return True
     else:
         print("Incorrect Master Password.")
-    return
+    return False
 
 if __name__ == "__main__":
-    #setup_master_password()
-    print(auth.load_master_password_hash())
-    login()
+    setup_master_password()
+    if login():
+        gui.main()
