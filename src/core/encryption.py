@@ -49,22 +49,6 @@ def decrypt_data(iv:bytes, ciphertext:bytes, key:bytes) -> str:
     data = unpadder.update(padded_data) + unpadder.finalize()
     return data.decode()
 
-#main for testing
-"""
-if __name__ == '__main__':
-    master_password = "password"
-    salt = os.urandom(16)
-    key = derive_key(master_password, salt)
-    print(key)
-
-    text = "somepassword123"
-    iv,ciphertext = encrypt_data(text,key)
-    print("Cipher Text:", ciphertext)
-
-    decrypted_text = decrypt_data(iv,ciphertext,key)
-    print("Decrypted Text:", decrypted_text)
-    """
-
 
 
 
