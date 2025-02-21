@@ -12,7 +12,7 @@ class LoginWindow(QMainWindow):
         super().__init__()
         self.setGeometry(900, 400, 600, 600)
         self.setFixedSize(500, 350)
-        self.setWindowTitle("pyManager Login")
+        self.setWindowTitle("pyManager")
 
         #create central widget
         widget = QWidget()
@@ -22,7 +22,7 @@ class LoginWindow(QMainWindow):
         self.layout.setAlignment(QtCore.Qt.AlignCenter)
 
         #pyManager Label
-        self.title_label = QLabel("pyManager")
+        self.title_label = QLabel("pyManager Login")
         self.title_label.setAlignment(QtCore.Qt.AlignCenter)
         self.layout.addWidget(self.title_label)
 
