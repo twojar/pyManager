@@ -7,6 +7,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QLa
 
 import src.core.storage
 from src.core import encryption,storage
+from src.core.add_entry_dialog import AddEntryDialog
 from src.core.auth import verify_master_hash, load_master_password_hash, create_master_hash, store_master_hash
 from src.core import login_gui
 
@@ -44,6 +45,7 @@ class VaultWindow(QMainWindow):
         #add password button
         self.add_button = QPushButton("Add")
         button_layout.addWidget(self.add_button)
+        self.add_button.clicked.connect(self.handle_add_entry)
 
         #remove password button
         self.remove_button = QPushButton("Remove")
@@ -68,6 +70,13 @@ class VaultWindow(QMainWindow):
             self.table.setItem(row_index, 0, site_item)
             self.table.setItem(row_index, 1, user_item)
             self.table.setItem(row_index, 2, pass_item)
+
+
+    def handle_add_entry(self):
+        dialog = AddEntryDialog(self.key,self)
+        if dialog.exec_() == QtWidgets.QDialog.Accepted:
+            self.load_passwords()
+
 
 
 
