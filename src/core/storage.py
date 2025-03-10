@@ -19,9 +19,9 @@ def create_tables():
     site TEXT NOT NULL,
     username TEXT,
     iv BLOB NOT NULL,
-    ciphertext BLOB NOT NULL,
-    '''
+    ciphertext BLOB NOT NULL
     )
+    ''')
     conn.commit()
     conn.close()
     return
@@ -37,7 +37,7 @@ def add_password(site: str, username: str, iv: str, ciphertext: str):
 def get_all_passwords(key:bytes):
     conn = create_connection()
     cursor = conn.cursor()
-    cursor.execute('''SELECT site, username, iv, ciphertext FROM passwords''')
+    cursor.execute('''SELECT id, site, username, iv, ciphertext FROM passwords''')
     rows = cursor.fetchall()
     conn.close()
 
@@ -52,6 +52,19 @@ def get_all_passwords(key:bytes):
             'password': password
         })
     return results
+
+#gets the number of passwords
+def get_password_count() -> int:
+    conn = create_connection()
+    cursor = conn.cursor()
+    cursor.execute('''SELECT COUNT(*) FROM passwords''')
+    results = cursor.fetchall()
+    conn.close()
+    if results:
+        return results[0]
+    else:
+        return 0
+
     
 
 
