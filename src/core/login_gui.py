@@ -4,7 +4,8 @@ from idlelib import window
 from PyQt5 import QtCore, QtGui, QtWidgets
 import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QLabel, QLineEdit
-from src.core.auth import verify_master_hash, load_master_password_hash, create_master_hash, store_master_hash
+from src.core.auth import verify_master_hash, load_master_password_hash, create_master_hash, store_master_hash, \
+    store_salt, load_salt
 from src.core.encryption import derive_key
 from src.core.vault_gui import VaultWindow
 
@@ -69,6 +70,8 @@ class LoginWindow(QMainWindow):
             master_password = self.password_input.text()
             hash_value = create_master_hash(master_password)
             store_master_hash(hash_value)
+            salt = os.urandom(16)
+            store_salt(salt)
             print("Master Password Set.")
             self.create_password_button.hide()
             self.login_button.show()
@@ -87,7 +90,7 @@ class LoginWindow(QMainWindow):
 
     #logic for opening vault window
     def open_vault_window(self):
-        salt = os.urandom(16)
+        salt = load_salt()
         master_password = self.password_input.text()
         key = derive_key(master_password, salt)
         self._vault_window = VaultWindow(key)

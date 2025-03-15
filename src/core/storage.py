@@ -65,6 +65,14 @@ def get_password_count() -> int:
     else:
         return 0
 
+#removes selected password by record_id
+def remove_password(record_id: int):
+    conn = create_connection()
+    cursor = conn.cursor()
+    cursor.execute('''DELETE FROM passwords WHERE id = ?''', (record_id,))
+    conn.commit()
+    conn.close()
+
     
 
 

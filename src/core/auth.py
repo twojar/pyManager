@@ -5,6 +5,7 @@ from argon2 import *
 #create a PasswordHasher object
 ph = PasswordHasher()
 HASH_FILE = "master_hash.json"
+SALT_FILE = "salt.bin"
 
 #create the hashed password
 def create_master_hash(master_password: str) -> str:
@@ -35,4 +36,16 @@ def load_master_password_hash(filename: str = HASH_FILE) -> str:
             data = json.load(file)
         return data.get("master_hash")
     return None
+
+def load_salt (filename: str = SALT_FILE) -> bytes | None:
+    if os.path.exists(filename):
+        with open(filename, "rb") as f:
+            return f.read()
+    return None
+
+def store_salt (salt: bytes, filename: str = SALT_FILE):
+    with open(filename, "w") as f:
+        f.write(salt)
+    return
+
 
